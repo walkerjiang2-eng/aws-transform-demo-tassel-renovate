@@ -91,7 +91,13 @@ tasks {
     }
 
     test {
-        jvmArgs = listOf<String>("-Xmx10g")
+        // -Xmx10g plus Graviton (ARM64) tuned flags for JDK 21; all are also valid on x86_64
+        jvmArgs = listOf<String>(
+            "-Xmx10g",
+            "-XX:ReservedCodeCacheSize=64M",
+            "-XX:InitialCodeCacheSize=64M",
+            "-Xss1m",
+        )
         ignoreFailures = true
         exclude(
             "**/analysis/gobii/*Test.class",
